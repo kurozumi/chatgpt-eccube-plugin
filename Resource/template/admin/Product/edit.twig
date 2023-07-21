@@ -1,0 +1,36 @@
+<div class="row" id="chat">
+    <div class="col-3">
+        <div class="d-inline-block">
+            <span>ChatGPTで商品説明を作成する</span>
+        </div>
+    </div>
+    <div class="col mb-2">
+        <div>
+            <textarea class="form-control mb-2 message" rows="8" placeholder="文章を入力してください"></textarea>
+            <input type="button" class="btn btn-primary" onClick="proofreading();" value="実行"/>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+    $(function () {
+        $('#addComment').before($('#chat'));
+    });
+
+    function proofreading() {
+        async function getResponse() {
+            let message = $('#chat textarea.message').val();
+            try {
+                const response = await axios.post('{{ path('admin_product_chat_gpt') }}', {
+                    "message": message,
+                });
+                $('#admin_product_description_detail').val(response.data.choices[0].message.content);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        getResponse();
+    }
+</script>

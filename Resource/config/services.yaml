@@ -1,0 +1,8 @@
+parameters:
+  env(OPENAI_API_KEY): ''
+  open_ai_key: '%env(OPENAI_API_KEY)%'
+
+services:
+  Orhanerday\OpenAi\OpenAi:
+    arguments:
+      - '%open_ai_key%'

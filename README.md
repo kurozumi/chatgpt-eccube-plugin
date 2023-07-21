@@ -1,0 +1,2 @@
+# ChatGPT for EC-CUBE
+
