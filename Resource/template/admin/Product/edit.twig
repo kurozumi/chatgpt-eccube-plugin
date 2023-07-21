@@ -7,7 +7,7 @@
     <div class="col mb-2">
         <div>
             <textarea class="form-control mb-2 message" rows="8" placeholder="文章を入力してください"></textarea>
-            <input type="button" class="btn btn-primary" onClick="proofreading();" value="実行"/>
+            <input type="button" class="btn btn-primary" onClick="proofreading();" value="作成"/>
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
         async function getResponse() {
             let message = $('#chat textarea.message').val();
             try {
-                const response = await axios.post('{{ path('admin_product_chat_gpt') }}', {
+                const response = await axios.post('{{ path('admin_chat_gpt_product') }}', {
                     "message": message,
                 });
                 $('#admin_product_description_detail').val(response.data.choices[0].message.content);

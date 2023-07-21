@@ -20,11 +20,11 @@ class Event implements EventSubscriberInterface
 
     public function onRenderAdminProductEdit(TemplateEvent $event)
     {
-        $event->addSnippet('@ChatGptEcCube/admin/Product/edit.twig');
+        $event->addSnippet('@ChatGpt/admin/Product/edit.twig');
     }
 
     public function onRenderAdminContentNewsEdit(TemplateEvent $event)
     {
-        $event->addSnippet('@ChatGptEcCube/admin/Content/news_edit.twig');
+        $event->addSnippet('@ChatGpt/admin/Content/news_edit.twig');
     }
 }
