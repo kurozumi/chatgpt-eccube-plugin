@@ -1,5 +1,5 @@
 {
-    "name": "ec-cube/chatgptforeccube",
+    "name": "ec-cube/chatgpt",
     "version": "4.2.0",
     "description": "ChatGPT for EC-CUBE",
     "type": "eccube-plugin",
@@ -8,6 +8,6 @@
         "orhanerday/open-ai": "*"
     },
     "extra": {
-        "code": "ChatGptForEcCube"
+        "code": "ChatGpt"
     }
 }
