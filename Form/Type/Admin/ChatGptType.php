@@ -13,8 +13,15 @@ class ChatGptType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('apiKey', TextType::class)
-            ->add('model', TextType::class);
+            ->add('apiKey', TextType::class, [
+                'required' => true,
+            ])
+            ->add('model', TextType::class, [
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'gpt-3.5.turbo',
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
