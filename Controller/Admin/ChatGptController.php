@@ -127,7 +127,7 @@ class ChatGptController extends AbstractController
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get();
 
-        if (null === $chatGpt->getRoleNews()) {
+        if (null === $chatGpt->getNews()) {
             throw new BadRequestHttpException();
         }
 
