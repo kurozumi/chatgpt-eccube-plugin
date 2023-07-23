@@ -12,6 +12,7 @@ use Plugin\ChatGpt\Repository\ChatGptRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -90,13 +91,17 @@ class ChatGptController extends AbstractController
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get();
 
+        if (null === $chatGpt->getProduct()) {
+            throw new BadRequestHttpException();
+        }
+
         $content = json_decode($request->getContent(), true);
         $chat = $this->openAi->chat([
             'model' => $chatGpt->getModel(),
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => '誤字脱字を修正してください。',
+                    'content' => $chatGpt->getProduct(),
                 ],
                 [
                     'role' => 'user',
@@ -122,13 +127,17 @@ class ChatGptController extends AbstractController
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get();
 
+        if (null === $chatGpt->getRoleNews()) {
+            throw new BadRequestHttpException();
+        }
+
         $content = json_decode($request->getContent(), true);
         $chat = $this->openAi->chat([
             'model' => $chatGpt->getModel(),
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => '誤字脱字を修正してください。',
+                    'content' => $chatGpt->getNews(),
                 ],
                 [
                     'role' => 'user',

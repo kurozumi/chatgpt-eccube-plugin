@@ -43,6 +43,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="c-primaryCol">
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header"><span>{{ '役割設定'|trans }}</span></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3"><span>{{ '商品説明'|trans }}</span><span
+                                        class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.product) }}
+                                    {{ form_errors(form.product) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><span>{{ '新着情報本文'|trans }}</span><span
+                                        class="badge badge-primary ml-1">{{ 'admin.common.required'|trans }}</span>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.news) }}
+                                    {{ form_errors(form.news) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="c-conversionArea">

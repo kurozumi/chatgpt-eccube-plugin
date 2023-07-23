@@ -23,16 +23,30 @@ class ChatGpt
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      */
     private $apiKey;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      */
     private $model;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $product;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $news;
 
     /**
      * @return int
@@ -78,5 +92,43 @@ class ChatGpt
     public function getModel(): ?string
     {
         return $this->model;
+    }
+
+    /**
+     * @param string $product
+     * @return $this
+     */
+    public function setProduct(string $product): self
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProduct(): ?string
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param string $news
+     * @return $this
+     */
+    public function setNews(string $news): self
+    {
+        $this->news = $news;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNews(): ?string
+    {
+        return $this->news;
     }
 }
