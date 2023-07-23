@@ -16,23 +16,28 @@ class ChatGptType extends AbstractType
         $builder
             ->add('apiKey', TextType::class, [
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'APIキーを入力してください。',
+                ],
             ])
             ->add('model', TextType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'gpt-3.5.turbo',
+                    'placeholder' => 'MODELを入力してください。例：gpt-3.5.turbo',
                 ],
             ])
             ->add('product', TextareaType::class, [
                 'required' => false,
                 'attr' => [
                     'rows' => 5,
+                    'placeholder' => '商品説明をChatGPTに書き換えてほしい指示内容を書いてください。',
                 ],
             ])
             ->add('news', TextareaType::class, [
                 'required' => false,
                 'attr' => [
                     'rows' => 5,
+                    'placeholder' => '商品説明をChatGPTに書き換えてほしい指示内容を書いてください。',
                 ],
             ]);
     }
