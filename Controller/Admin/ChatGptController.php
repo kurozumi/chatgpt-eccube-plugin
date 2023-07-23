@@ -93,7 +93,7 @@ class ChatGptController extends AbstractController
         $content = json_decode($request->getContent(), true);
         $chat = $this->openAi->chat([
             'model' => $chatGpt->getModel(),
-            'message' => [
+            'messages' => [
                 [
                     'role' => 'system',
                     'content' => '誤字脱字を修正してください。',
@@ -125,7 +125,7 @@ class ChatGptController extends AbstractController
         $content = json_decode($request->getContent(), true);
         $chat = $this->openAi->chat([
             'model' => $chatGpt->getModel(),
-            'message' => [
+            'messages' => [
                 [
                     'role' => 'system',
                     'content' => '誤字脱字を修正してください。',

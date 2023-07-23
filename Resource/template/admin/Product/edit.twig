@@ -21,11 +21,16 @@
     function proofreading() {
         async function getResponse() {
             let message = $('#chat textarea.message').val();
+            if (message == '') {
+                alert('文章を入力してください。');
+                return false;
+            }
             try {
                 const response = await axios.post('{{ path('admin_chat_gpt_product') }}', {
                     "message": message,
                 });
                 $('#admin_product_description_detail').val(response.data.choices[0].message.content);
+                alert('文章を作成しました。');
             } catch (error) {
                 alert(error.message);
             }

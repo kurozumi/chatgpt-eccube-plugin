@@ -17,6 +17,7 @@ class PluginManager extends AbstractPluginManager
         $chatGpt = $entityManager->getRepository(ChatGpt::class)->get();
         if (!$chatGpt) {
             $chatGpt = new ChatGpt();
+            $chatGpt->setModel('gpt-3.5-turbo');
             $entityManager->persist($chatGpt);
             $entityManager->flush();
         }
