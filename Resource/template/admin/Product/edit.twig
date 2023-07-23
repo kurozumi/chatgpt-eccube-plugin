@@ -22,20 +22,19 @@
 
             async function getResponse(that) {
                 let message = $('#chat textarea.message').val();
-                if (message == '') {
+                if (message === '') {
                     alert('文章を入力してください。');
-                    return false;
+                } else {
+                    try {
+                        const response = await axios.post('{{ path('admin_chat_gpt_product') }}', {
+                            "message": message,
+                        });
+                        $('#admin_product_description_detail').val(response.data.choices[0].message.content);
+                        alert('文章を作成しました。');
+                    } catch (error) {
+                        alert(error.message);
+                    }
                 }
-                try {
-                    const response = await axios.post('{{ path('admin_chat_gpt_product') }}', {
-                        "message": message,
-                    });
-                    $('#admin_product_description_detail').val(response.data.choices[0].message.content);
-                    alert('文章を作成しました。');
-                } catch (error) {
-                    alert(error.message);
-                }
-
                 $(that).val('作成')
             }
 

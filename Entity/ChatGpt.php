@@ -95,10 +95,10 @@ class ChatGpt
     }
 
     /**
-     * @param string $product
+     * @param string|null $product
      * @return $this
      */
-    public function setProduct(string $product): self
+    public function setProduct(?string $product): self
     {
         $this->product = $product;
 
@@ -114,10 +114,10 @@ class ChatGpt
     }
 
     /**
-     * @param string $news
+     * @param string|null $news
      * @return $this
      */
-    public function setNews(string $news): self
+    public function setNews(?string $news): self
     {
         $this->news = $news;
 
