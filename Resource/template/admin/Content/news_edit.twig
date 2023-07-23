@@ -7,7 +7,7 @@
     <div class="col mb-2">
         <div>
             <textarea class="form-control mb-2 message" rows="8" placeholder="文章を入力してください。"></textarea>
-            <input type="button" class="btn btn-primary" onClick="proofreading();" value="作成"/>
+            <input type="button" class="btn btn-primary" value="作成"/>
         </div>
     </div>
 </div>
@@ -16,26 +16,30 @@
 <script>
     $(function () {
         $('#newsForm .card-body').append($('#chat'));
+
+        $('#chat input[type="button"]').on('click', function () {
+            $(this).val('作成中...');
+
+            async function getResponse(that) {
+                let message = $('#chat textarea.message').val();
+                if (message == '') {
+                    alert('文章を入力してください。');
+                    return false;
+                }
+                try {
+                    const response = await axios.post('{{ path('admin_chat_gpt_news') }}', {
+                        "message": message,
+                    });
+                    $('#admin_news_description').val(response.data.choices[0].message.content);
+                    alert('文章を作成しました。');
+                } catch (error) {
+                    alert(error.message);
+                }
+
+                $(that).val('作成')
+            }
+
+            getResponse(this);
+        });
     });
-
-    function proofreading() {
-        async function getResponse() {
-            let message = $('#chat textarea.message').val();
-            if (message == '') {
-                alert('文章を入力してください。');
-                return false;
-            }
-            try {
-                const response = await axios.post('{{ path('admin_chat_gpt_news') }}', {
-                    "message": message,
-                });
-                $('#admin_news_description').val(response.data.choices[0].message.content);
-                alert('文章を作成しました。');
-            } catch (error) {
-                alert(error.message);
-            }
-        }
-
-        getResponse();
-    }
 </script>
