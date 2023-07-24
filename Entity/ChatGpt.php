@@ -34,26 +34,26 @@ class ChatGpt
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $apiKey;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true
      */
     private $model;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */
     private $product;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */
