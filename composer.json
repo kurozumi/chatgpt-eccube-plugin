@@ -1,6 +1,6 @@
 {
     "name": "ec-cube/chatgpt",
-    "version": "4.2.0",
+    "version": "4.2.1",
     "description": "ChatGPT for EC-CUBE",
     "type": "eccube-plugin",
     "require": {
