@@ -1,11 +1,11 @@
 <?php
 
-/**
+/*
  * This file is part of ChatGpt
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,7 +22,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChatGptType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('apiKey', TextType::class, [
@@ -53,10 +59,15 @@ class ChatGptType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * @param OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ChatGpt::class
+            'data_class' => ChatGpt::class,
         ]);
     }
 }

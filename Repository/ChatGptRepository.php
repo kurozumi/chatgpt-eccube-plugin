@@ -1,11 +1,11 @@
 <?php
 
-/**
+/*
  * This file is part of ChatGpt
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,11 +28,20 @@ class ChatGptRepository extends AbstractRepository
     }
 
     /**
-     * @param $id
-     * @return mixed|object|null
+     * @param int $id
+     *
+     * @return ChatGpt
+     *
+     * @throws \Exception
      */
-    public function get($id = 1)
+    public function get(int $id = 1): ChatGpt
     {
-        return $this->find($id);
+        $chatGpt = $this->find($id);
+
+        if (null === $chatGpt) {
+            throw new \Exception('Config not found. id = '.$id);
+        }
+
+        return $chatGpt;
     }
 }
