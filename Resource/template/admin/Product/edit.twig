@@ -6,39 +6,55 @@
     </div>
     <div class="col mb-2">
         <div>
-            <textarea class="form-control mb-2 message" rows="8" placeholder="文章を入力してください"></textarea>
-            <input type="button" class="btn btn-primary" value="作成"/>
+            <div id="chat-log"></div>
+            <textarea type="text" id="user-input" class="form-control mb-2" rows="8"
+                      placeholder="文章を入力してください"></textarea>
+            <input type="button" id="send-button" class="btn btn-primary" value="ChatGPTにメッセージを送信する">
         </div>
     </div>
 </div>
 
-<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
     $(function () {
         $('#addComment').before($('#chat'));
 
-        $('#chat input[type="button"]').on('click', function () {
-            $(this).val('作成中...');
+        let conversationHistory = [];
 
-            async function getResponse(that) {
-                let message = $('#chat textarea.message').val();
-                if (message === '') {
-                    alert('文章を入力してください。');
-                } else {
-                    try {
-                        const response = await axios.post('{{ path('admin_chat_gpt_product') }}', {
-                            "message": message,
-                        });
-                        $('#admin_product_description_detail').val(response.data.choices[0].message.content);
-                        alert('文章を作成しました。');
-                    } catch (error) {
-                        alert(error.message);
-                    }
-                }
-                $(that).val('作成')
+        async function getChatResponse(userInput) {
+            const history = conversationHistory.concat(userInput).join('\n');
+            const response = await fetch('{{ path('admin_chat_gpt_product') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'prompt': history
+                })
+            });
+
+            const data = await response.json();
+            conversationHistory.push(userInput);
+            return data.error ? data.error.message : data.choices[0].message.content.trim();
+        }
+
+        document.getElementById('send-button').addEventListener('click', async () => {
+            const userInput = document.getElementById('user-input').value;
+            const chatLog = document.getElementById('chat-log');
+            const userMessageElement = document.createElement('div');
+            userMessageElement.innerText = `あなた: ${userInput}`;
+            chatLog.appendChild(userMessageElement);
+
+            const botResponse = await getChatResponse(userInput);
+            const botMessageElement = document.createElement('div');
+            if (botResponse.error) {
+                botMessageElement.innerText = `ChatGPT: ${botResponse}`;
+                chatLog.appendChild(botMessageElement);
+            } else {
+                const textarea = document.getElementById('admin_product_description_detail');
+                textarea.value = botResponse;
             }
 
-            getResponse(this);
+            document.getElementById('user-input').value = '';
         });
     });
 </script>
