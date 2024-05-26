@@ -31,14 +31,10 @@
                     'prompt': history
                 })
             });
+
             const data = await response.json();
-            if (data.error) {
-                botResponse = data.error.message;
-            } else {
-                botResponse = data.choices[0].message.content.trim()
-            }
             conversationHistory.push(userInput);
-            return botResponse;
+            return data.error ? data.error.message : data.choices[0].message.content.trim();
         }
 
         document.getElementById('send-button').addEventListener('click', async () => {
