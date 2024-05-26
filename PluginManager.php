@@ -36,8 +36,8 @@ class PluginManager extends AbstractPluginManager
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $container->get('doctrine.orm.entity_manager');
 
-        $chatGpt = $entityManager->getRepository(ChatGpt::class)->get(ChatGpt::ID);
-        if (!$chatGpt) {
+        $chatGpt = $entityManager->find(ChatGpt::class, ChatGpt::ID);
+        if (null === $chatGpt) {
             $chatGpt = new ChatGpt();
             $chatGpt->setModel('gpt-3.5-turbo');
             $entityManager->persist($chatGpt);
