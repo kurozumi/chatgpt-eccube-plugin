@@ -13,7 +13,6 @@
 
 namespace Plugin\ChatGpt\Controller\Admin;
 
-use Eccube\Common\EccubeConfig;
 use Eccube\Controller\AbstractController;
 use Eccube\Util\CacheUtil;
 use Eccube\Util\StringUtil;
@@ -24,7 +23,6 @@ use Plugin\ChatGpt\Repository\ChatGptRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -107,23 +105,24 @@ class ChatGptController extends AbstractController
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get(ChatGpt::ID);
 
-        if (null === $chatGpt->getProduct()) {
-            throw new BadRequestHttpException();
+        $content = json_decode($request->getContent(), true);
+
+        $messages = [
+            [
+                'role' => 'user',
+                'content' => $content['prompt'],
+            ],
+        ];
+        if (null !== $chatGpt->getProduct()) {
+            $messages[] = [
+                'role' => 'system',
+                'content' => $chatGpt->getProduct(),
+            ];
         }
 
-        $content = json_decode($request->getContent(), true);
         $chat = $this->openAi->chat([
             'model' => $chatGpt->getModel(),
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => $chatGpt->getProduct(),
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $content['message'],
-                ],
-            ],
+            'messages' => $messages,
         ]);
 
         return new Response($chat);
@@ -143,23 +142,24 @@ class ChatGptController extends AbstractController
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get(ChatGpt::ID);
 
-        if (null === $chatGpt->getNews()) {
-            throw new BadRequestHttpException();
+        $content = json_decode($request->getContent(), true);
+
+        $messages = [
+            [
+                'role' => 'user',
+                'content' => $content['prompt'],
+            ],
+        ];
+        if (null !== $chatGpt->getProduct()) {
+            $messages[] = [
+                'role' => 'system',
+                'content' => $chatGpt->getNews(),
+            ];
         }
 
-        $content = json_decode($request->getContent(), true);
         $chat = $this->openAi->chat([
             'model' => $chatGpt->getModel(),
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => $chatGpt->getNews(),
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $content['message'],
-                ],
-            ],
+            'messages' => $messages,
         ]);
 
         return new Response($chat);
