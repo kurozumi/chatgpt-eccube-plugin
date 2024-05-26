@@ -72,7 +72,7 @@ class ChatGptController extends AbstractController
             $this->entityManager->persist($chatGpt);
             $this->entityManager->flush();
 
-            $envFile = $this->get(EccubeConfig::class)->get('kernel.project_dir').'/.env';
+            $envFile = $this->getParameter('kernel.project_dir').'/.env';
             $env = file_get_contents($envFile);
 
             $env = StringUtil::replaceOrAddEnv($env, [
