@@ -1,11 +1,11 @@
 <?php
 
-/**
+/*
  * This file is part of ChatGpt
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,9 +19,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class Event implements EventSubscriberInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             '@admin/Product/product.twig' => 'onRenderAdminProductEdit',
@@ -29,12 +29,22 @@ class Event implements EventSubscriberInterface
         ];
     }
 
-    public function onRenderAdminProductEdit(TemplateEvent $event)
+    /**
+     * @param TemplateEvent $event
+     *
+     * @return void
+     */
+    public function onRenderAdminProductEdit(TemplateEvent $event): void
     {
         $event->addSnippet('@ChatGpt/admin/Product/edit.twig');
     }
 
-    public function onRenderAdminContentNewsEdit(TemplateEvent $event)
+    /**
+     * @param TemplateEvent $event
+     *
+     * @return void
+     */
+    public function onRenderAdminContentNewsEdit(TemplateEvent $event): void
     {
         $event->addSnippet('@ChatGpt/admin/Content/news_edit.twig');
     }

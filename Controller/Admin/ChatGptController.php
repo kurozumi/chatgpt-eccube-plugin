@@ -1,11 +1,11 @@
 <?php
 
-/**
+/*
  * This file is part of ChatGpt
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,6 +13,7 @@
 
 namespace Plugin\ChatGpt\Controller\Admin;
 
+use Eccube\Common\EccubeConfig;
 use Eccube\Controller\AbstractController;
 use Eccube\Util\CacheUtil;
 use Eccube\Util\StringUtil;
@@ -34,12 +35,12 @@ class ChatGptController extends AbstractController
     /**
      * @var OpenAi
      */
-    private $openAi;
+    private OpenAi $openAi;
 
     /**
      * @var ChatGptRepository
      */
-    private $chatGptRepository;
+    private ChatGptRepository $chatGptRepository;
 
     public function __construct(OpenAi $openAi, ChatGptRepository $chatGptRepository)
     {
@@ -50,9 +51,13 @@ class ChatGptController extends AbstractController
     /**
      * @param Request $request
      * @param CacheUtil $cacheUtil
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
+     * @throws \Exception
+     *
      * @Route("/config", name="admin_chat_gpt_config")
+     *
      * @Template("@ChatGpt/admin/config.twig")
      */
     public function config(Request $request, CacheUtil $cacheUtil)
@@ -67,7 +72,7 @@ class ChatGptController extends AbstractController
             $this->entityManager->persist($chatGpt);
             $this->entityManager->flush();
 
-            $envFile = $this->getParameter('kernel.project_dir') . '/.env';
+            $envFile = $this->get(EccubeConfig::class)->get('kernel.project_dir').'/.env';
             $env = file_get_contents($envFile);
 
             $env = StringUtil::replaceOrAddEnv($env, [
@@ -100,7 +105,7 @@ class ChatGptController extends AbstractController
     public function product(Request $request): Response
     {
         /** @var ChatGpt $chatGpt */
-        $chatGpt = $this->chatGptRepository->get();
+        $chatGpt = $this->chatGptRepository->get(ChatGpt::ID);
 
         if (null === $chatGpt->getProduct()) {
             throw new BadRequestHttpException();
@@ -136,7 +141,7 @@ class ChatGptController extends AbstractController
     public function news(Request $request): Response
     {
         /** @var ChatGpt $chatGpt */
-        $chatGpt = $this->chatGptRepository->get();
+        $chatGpt = $this->chatGptRepository->get(ChatGpt::ID);
 
         if (null === $chatGpt->getNews()) {
             throw new BadRequestHttpException();

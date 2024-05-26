@@ -1,11 +1,11 @@
 <?php
 
-/**
+/*
  * This file is part of ChatGpt
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,16 +17,22 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="plg_chat_gpt")
+ *
  * @ORM\Entity(repositoryClass="Plugin\ChatGpt\Repository\ChatGptRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class ChatGpt
 {
+    public const ID = 1;
+
     /**
      * @var int
      *
      * @ORM\Column(type="integer", options={"unsigned": true})
+     *
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
@@ -62,13 +68,14 @@ class ChatGpt
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string $apiKey
+     *
      * @return $this
      */
     public function setApiKey(string $apiKey): self
@@ -88,6 +95,7 @@ class ChatGpt
 
     /**
      * @param string $model
+     *
      * @return $this
      */
     public function setModel(string $model): self
@@ -107,6 +115,7 @@ class ChatGpt
 
     /**
      * @param string|null $product
+     *
      * @return $this
      */
     public function setProduct(?string $product): self
@@ -126,6 +135,7 @@ class ChatGpt
 
     /**
      * @param string|null $news
+     *
      * @return $this
      */
     public function setNews(?string $news): self
