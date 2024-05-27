@@ -25,6 +25,7 @@
             const response = await fetch('{{ path('admin_chat_gpt_news') }}', {
                 method: 'POST',
                 headers: {
+                    'ECCUBE-CSRF-TOKEN': $('meta[name="eccube-csrf-token"]').attr('content'),
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
