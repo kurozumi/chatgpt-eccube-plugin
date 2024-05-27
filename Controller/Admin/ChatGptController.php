@@ -23,6 +23,7 @@ use Plugin\ChatGpt\Repository\ChatGptRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -102,6 +103,8 @@ class ChatGptController extends AbstractController
      */
     public function product(Request $request): Response
     {
+        $this->isTokenValid();
+
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get(ChatGpt::ID);
 
@@ -139,6 +142,8 @@ class ChatGptController extends AbstractController
      */
     public function news(Request $request): Response
     {
+        $this->isTokenValid();
+
         /** @var ChatGpt $chatGpt */
         $chatGpt = $this->chatGptRepository->get(ChatGpt::ID);
 
